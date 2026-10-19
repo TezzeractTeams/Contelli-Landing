@@ -5,22 +5,24 @@ import {
   Wrapper,
   Inner,
   LogoContainer,
-  Nav,
   CallToActions,
-  AbsoluteLinks,
   BurgerMenu,
+  AuthLink,
+  AuthEmail,
 } from './styles';
 import raft_logo from '../../../../public/svgs/raft_logo.svg';
 import ic_bars from '../../../../public/svgs/ic_bars.svg';
 import { GetStartedButton } from '@/components';
 import ThemeToggle from '@/components/Common/ThemeToggle';
-import AnimatedLink from '@/components/Common/AnimatedLink';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { links, menu } from './constants';
+import { menu } from './constants';
+import { useMe } from '../../../../libs/useMe';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { claims, loading } = useMe();
+
   return (
     <Wrapper>
       <Inner>
@@ -37,7 +39,17 @@ const Header = () => {
         </LogoContainer>
         <CallToActions className={isOpen ? 'active' : ''}>
           <ThemeToggle />
-          <AnimatedLink title="Login" />
+          {!loading &&
+            (claims ? (
+              <>
+                {typeof claims.email === 'string' && (
+                  <AuthEmail>{claims.email}</AuthEmail>
+                )}
+                <AuthLink href="/auth/logout">Logout</AuthLink>
+              </>
+            ) : (
+              <AuthLink href="/auth/login">Login</AuthLink>
+            ))}
           <GetStartedButton padding="0.5rem 0.75rem" />
         </CallToActions>
       </Inner>

@@ -109,6 +109,31 @@ export const AbsoluteLinks = styled(Link)`
   font-weight: 400;
 `;
 
+export const AuthLink = styled.a`
+  color: var(--link-color);
+  font-size: 1rem;
+  font-weight: 400;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const AuthEmail = styled.span`
+  color: var(--link-color);
+  font-size: 0.875rem;
+  font-weight: 400;
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 export const CallToActions = styled.div`
   display: flex;
   align-items: center;
